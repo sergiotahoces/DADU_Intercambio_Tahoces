@@ -4,6 +4,7 @@ import java.util.Scanner;
 
 import sergiotahoces.controlador.bdmanager;
 import sergiotahoces.controlador.filemanager;
+import sergiotahoces.controlador.hibernatemanager;
 import sergiotahoces.modelo.Elemento;
 
 import java.io.BufferedWriter;
@@ -18,7 +19,9 @@ public class Main {
 	static bdmanager bd1 = new bdmanager();
 	static HashMap<Integer, Elemento> datos1 = new HashMap<Integer, Elemento>();
 	
+	
 	public static void main(String[] args) throws SQLException {
+		hibernatemanager h1 = new hibernatemanager();
 		Scanner sc = new Scanner(System.in);
 		System.out.println("*--------------------------------------------------------------------------*");
 		System.out.println("");
@@ -29,6 +32,7 @@ public class Main {
 		System.out.println("* Pulsa 4 si: Añadir 1 a Fichero");
 		System.out.println("* Pulsa 5 si: Pasar los datos que haya en la BD al fichero");
 		System.out.println("* Pulsa 6 si: Pasar los datos que haya en el Fichero a la BD");
+		System.out.println("* Pulsa 7 si: Modifica los datos de la BD");
 		System.out.println("");
 		System.out.println("*--------------------------------------------------------------------------*");
 		int option;
@@ -71,6 +75,15 @@ public class Main {
 			System.out.println("*------------------------------------------------------------------*");
 			datos1 = f1.leerFichero();
 			bd1.escribir(datos1);
+			break;
+		case 7: 
+			System.out.println("OPCION 7 Elegida, Modifica los datos de la BD");
+			System.out.println("*------------------------------------------------------------------*");
+			bd1.Modificar();
+			break;
+		case 8:
+			System.out.println("dsddsd");
+			h1.mostrarBD();
 			break;
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + option);

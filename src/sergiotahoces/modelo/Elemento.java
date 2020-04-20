@@ -15,6 +15,12 @@ public class Elemento {
 		this.caracteristica = caracteristica;
 	}
 	
+	@Override
+	public String toString() {
+		return "Elemento [id=" + id + ", nombre=" + nombre + ", descripcion=" + descripcion + ", caracteristica="
+				+ caracteristica + "]";
+	}
+
 	public int getId() {
 		return id;
 	}

@@ -9,7 +9,7 @@ public class conexion {
 	private static String bd = "adat_intercambio";
 	private static String login = "root";
 	private static String pwd = "root";
-	private static String url = "jdbc:mysql://localhost:8889/" + bd;
+	private static String url = "jdbc:mysql://localhost:8888/" + bd;
 	private static Connection conexion;
 	private Statement st;
 	private ResultSet rs;

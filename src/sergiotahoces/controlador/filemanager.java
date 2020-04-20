@@ -1,4 +1,5 @@
 package sergiotahoces.controlador;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
@@ -21,8 +22,8 @@ public class filemanager {
 
 			for (Integer i : datos.keySet()) {
 				Elemento a = datos.get(i);
-				bwriter.write(
-						a.getId() + " / " + a.getNombre() + " / " + a.getDescripcion() + " / " + a.getCaracteristica() + "\n");
+				bwriter.write(a.getId() + " / " + a.getNombre() + " / " + a.getDescripcion() + " / "
+						+ a.getCaracteristica() + "\n");
 			}
 			bwriter.close();
 		} catch (IOException e) {
@@ -47,7 +48,7 @@ public class filemanager {
 		}
 
 	}
-	
+
 	public Elemento insertar() {
 
 		Scanner sc = new Scanner(System.in);
@@ -80,8 +81,8 @@ public class filemanager {
 				String nombre = data[1];
 				String descripcion = data[2];
 				String caracteristica = data[3];
-				
-				datosMap.put(id,new Elemento(id, nombre,descripcion,caracteristica));
+
+				datosMap.put(id, new Elemento(id, nombre, descripcion, caracteristica));
 			}
 		} catch (IOException e) {
 			e.printStackTrace();

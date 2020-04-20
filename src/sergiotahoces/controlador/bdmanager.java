@@ -1,4 +1,5 @@
 package sergiotahoces.controlador;
+
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -10,6 +11,8 @@ import sergiotahoces.modelo.Elemento;
 import sergiotahoces.modelo.conexion;
 
 public class bdmanager {
+	private conexion conexion1;
+	private Connection cn;
 
 	public HashMap<Integer, Elemento> leerEnBase() throws SQLException {
 		conexion conexion1 = new conexion();
@@ -57,8 +60,6 @@ public class bdmanager {
 	}
 
 	public Elemento insertar() {
-		bdmanager bd1 = new bdmanager();
-
 		Scanner sc = new Scanner(System.in);
 		int id;
 		String nombre;
@@ -75,6 +76,31 @@ public class bdmanager {
 		caracteristica = sc.nextLine();
 		Elemento a = new Elemento(id, nombre, descripcion, caracteristica);
 		return a;
+	}
+
+	public void Modificar() throws SQLException {
+		bdmanager bd1 = new bdmanager();
+		conexion conexion1 = new conexion();
+		Connection cn = conexion1.TestConexion();
+
+		Scanner sc = new Scanner(System.in);
+		int id;
+		String nombre;
+		String descripcion;
+		String caracteristica;
+
+		System.out.println("Introduce el id: ");
+		id = Integer.parseInt(sc.nextLine());
+		System.out.println("Introduce el nombre: ");
+		nombre = sc.nextLine();
+		System.out.println("Introduce la descripcion: ");
+		descripcion = sc.nextLine();
+		System.out.println("Introduce las caracteristicas: ");
+		caracteristica = sc.nextLine();
+		Statement stm = cn.createStatement();
+		stm.executeQuery("update elementos set nombre =" + nombre + ", descripcion = " + descripcion
+				+ ", caracteristica = " + caracteristica + "  where id =" + id);
+
 	}
 
 }
