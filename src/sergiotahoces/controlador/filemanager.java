@@ -3,16 +3,20 @@ package sergiotahoces.controlador;
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.SQLException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Scanner;
 
 import sergiotahoces.modelo.Elemento;
 
 public class filemanager {
+
 	public void escrbirEnFichero(HashMap<Integer, Elemento> datos) throws SQLException {
 
 		File f = new File("AccesoDatos");
@@ -89,4 +93,73 @@ public class filemanager {
 		}
 		return datosMap;
 	}
+
+	public void modificarElemento(Elemento e) {
+		File f = new File("AccesoDatos");
+		try {
+			File tempFile = new File("Files/temp.txt");
+			BufferedReader br = new BufferedReader(new FileReader(f));
+			PrintWriter pw = new PrintWriter(new FileWriter(tempFile));
+			String data = null;
+			while ((data = br.readLine()) != null) {
+				if ((Character.getNumericValue(data.charAt(0))!= e.getId())) {
+					pw.println(data);
+					pw.flush();
+				} else {
+					pw.println(e.toString());
+				}
+			}
+			pw.close();
+			br.close();
+
+		} catch (IOException o) {
+			o.printStackTrace();
+		}
+	}
+
+	public void buscarUno(int id) {
+		HashMap<Integer, Elemento> datosmap = new HashMap<Integer, Elemento>();
+		try {
+			datosmap = leerFichero();
+		} catch (SQLException e1) {
+			e1.printStackTrace();
+		}
+		Iterator<Elemento> valor = datosmap.values().iterator();
+		while (valor.hasNext()) {
+			Elemento e = valor.next();
+			if (e.getId() == id) {
+				System.out.println(e.toString());
+			}
+		}
+	} 
+	public void eliminarTodo() {
+        PrintWriter pw;
+        File f = new File("AccesoDatos");
+        try {
+            pw = new PrintWriter(f);
+            pw.close();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        }
+    }
+	public void moveData(HashMap<Integer, Elemento> e) {
+        FileWriter writer;
+        File f = new File("AccesoDatos");
+        
+        try {
+            writer = new FileWriter(f);
+            BufferedWriter bwriter = new BufferedWriter(writer);
+            PrintWriter pwriter = new PrintWriter(bwriter);
+            Iterator<Elemento> itr = e.values().iterator();
+            while (itr.hasNext()) {
+                pwriter.write(itr.next().toString());
+                pwriter.write("\n");
+            }
+            pwriter.close();
+            bwriter.close();
+        } catch (IOException e1) {
+            e1.printStackTrace();
+        }
+    }
+
 }
