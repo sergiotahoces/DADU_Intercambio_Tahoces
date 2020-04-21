@@ -151,7 +151,7 @@ public class Main {
 		case 18:
 			System.out.println("OPCION 18 Elegida, Pasar fichero a base");
 			System.out.println("*------------------------------------------------------------------*");
-			f1.moveData(bd1.leerEnBase());
+			f1.moverDatos(bd1.leerEnBase());
 			break;
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + option);

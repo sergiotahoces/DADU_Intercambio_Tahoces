@@ -142,7 +142,7 @@ public class filemanager {
             e.printStackTrace();
         }
     }
-	public void moveData(HashMap<Integer, Elemento> e) {
+	public void moverDatos(HashMap<Integer, Elemento> e) {
         FileWriter writer;
         File f = new File("AccesoDatos");
         
