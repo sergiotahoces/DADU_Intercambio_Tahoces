@@ -18,7 +18,7 @@ public class Main {
 	static filemanager f1 = new filemanager();
 	static bdmanager bd1 = new bdmanager();
 	static HashMap<Integer, Elemento> datos1 = new HashMap<Integer, Elemento>();
-	//static hibernatemanager h1 = new hibernatemanager();
+	static hibernatemanager h1 = new hibernatemanager();
 	
 	public static void main(String[] args) throws SQLException {
 		int id;

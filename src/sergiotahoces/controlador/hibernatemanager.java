@@ -20,7 +20,7 @@ public class hibernatemanager {
 		session = util.getSessionFactory().openSession();
 	}
 
-	public void mostrarBD() {
+	public void mostrarHibernate() {
 		Query q = session.createQuery("select e from Elemento e");
         List results = q.list();
         Iterator itr = results.iterator();
@@ -29,25 +29,56 @@ public class hibernatemanager {
             System.out.println(e.toString());
         }
 	}
-
-	public void insertarBD() {
+	
+	public void insertarHibernate(Elemento e) {
+		session.beginTransaction();
+        session.save(e);
+        session.getTransaction().commit();
+	}
+	public void modificarHibernate(Elemento a) {
+		
+		Query q = session.createQuery("select e from Elemento e");
+        List results = q.list();
+        Iterator itr = results.iterator();
+        while (itr.hasNext()) {
+            Elemento e = (Elemento) itr.next();
+            if(a.getId()==e.getId()) {
+            	session.beginTransaction();
+                Query j = session.createQuery("update Elemento e set e.nombre ='" + a.getNombre() + "', e.descripcion='"
+                        + a.getNombre() + "', e.caracteristicas='" + a.getCaracteristica() + "' where e.id =" + a.getId());
+                j.executeUpdate();
+                session.getTransaction().commit();
+                System.out.println("Elemento cambiado.");
+            }
+            else {
+            	System.out.println("Id no existe");
+            }
+        }
 
 	}
-
-	public void mostrarFichero() {
-
+	public void borrarHibernate(int id) {
+		session.beginTransaction();
+        Query q = session.createQuery("delete from Elemento where id=" + id);
+        q.executeUpdate();
+        session.getTransaction().commit();
+        System.out.println("Elemento borrado");
 	}
-
-	public void insertarFichero() {
-
+	public void borrarTodosHibernate() {
+		session.beginTransaction();
+        Query q = session.createQuery("delete from Elemento");
+        q.executeUpdate();
+        session.getTransaction().commit();
+        System.out.println("Datos borrados");
 	}
-
-	public void moverBD() {
-
+	public void buscarElementoHibernate(int id) {
+		Elemento e = (Elemento) session.get(Elemento.class, id);
+		System.out.println(e.toString());
 	}
-
-	public void moverFichero() {
-
+	public void anadirhibernate(HashMap<Integer, Elemento> elementos) {
+		Iterator<Elemento> itr = elementos.values().iterator();
+        while (itr.hasNext()) {
+            insertarHibernate(itr.next());
+        }
 	}
 
 }
