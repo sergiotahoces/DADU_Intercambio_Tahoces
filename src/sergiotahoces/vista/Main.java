@@ -6,6 +6,7 @@ import sergiotahoces.controlador.bdmanager;
 import sergiotahoces.controlador.filemanager;
 import sergiotahoces.controlador.hibernatemanager;
 import sergiotahoces.modelo.Elemento;
+import sergiotahoces.modelo.JsonClass;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -19,6 +20,7 @@ public class Main {
 	static bdmanager bd1 = new bdmanager();
 	static HashMap<Integer, Elemento> datos1 = new HashMap<Integer, Elemento>();
 	static hibernatemanager h1 = new hibernatemanager();
+	static JsonClass jc = new JsonClass();
 	
 	public static void main(String[] args) throws SQLException {
 		int id;
@@ -45,8 +47,20 @@ public class Main {
 		System.out.println("* Pulsa 16 si: Modifica los datos de la BD");
 		System.out.println("* Pulsa 17 si: Pasar datos de fichero a base");
 		System.out.println("* Pulsa 18 si: Pasar fichero a base");
+		System.out.println("*--------------------------------------------------------------------------*");
+		System.out.println("");
+		System.out.println("* Metodos utilizando JSON *");
 		System.out.println("");
 		System.out.println("*--------------------------------------------------------------------------*");
+		System.out.println("Pulsa 19 para mostrar todos los datos");
+		System.out.println("Pulsa 20 para insertar un nuevo elemento");
+		System.out.println("Pulsa 21 para modificar un elemento existente");
+		System.out.println("Pulsa 22 para borrar un elemento");
+		System.out.println("Pulsa 23 para borrar todos los elementos");
+		System.out.println("Pulsa 24 para buscar un elemento. PROXIMAMENTE");
+		System.out.println("Pulsa 25 para pasar los datos de A a B");
+		System.out.println("*--------------------------------------------------------------------------*");
+		System.out.println("");
 		int option;
 		option = sc.nextInt();
 		switch (option) {
@@ -152,6 +166,67 @@ public class Main {
 			System.out.println("OPCION 18 Elegida, Pasar fichero a base");
 			System.out.println("*------------------------------------------------------------------*");
 			f1.moverDatos(bd1.leerEnBase());
+			break;
+		case 19:
+			System.out.println("OPCION 19 Elegida, mostrar todos los datos");
+			System.out.println("*------------------------------------------------------------------*");
+			jc.imprimir(jc.leer());
+			break;
+		case 20:
+			System.out.println("OPCION 20 Elegida, insertar un nuevo elemento");
+			System.out.println("*------------------------------------------------------------------*");
+			jc.escribirUno();
+			break;
+		case 21:
+			System.out.println("OPCION 21 Elegida, modificar un elemento existente");
+			System.out.println("*------------------------------------------------------------------*");
+			jc.modificar();
+			break;
+		case 22:
+			System.out.println("OPCION 22 Elegida, borrar un elemento");
+			System.out.println("*------------------------------------------------------------------*");
+			jc.eliminaUno();
+			break;
+		case 23:
+			System.out.println("OPCION 23 Elegida, borrar todos los elementos");
+			System.out.println("*------------------------------------------------------------------*");
+			jc.eliminar();
+			break;
+		case 24:
+			System.out.println("OPCION 24 Elegida, buscar un elemento.");
+			System.out.println("*------------------------------------------------------------------*");
+			break;
+		case 25:
+			System.out.println("OPCION 25 Elegida, pasar los datos de A a B");
+			System.out.println("*------------------------------------------------------------------*");
+			System.out.println("¿Quieres pasar o recibir datos? ");
+			System.out.println("1. Recibir");
+			System.out.println("2. Pasar");
+			int opc = Integer.parseInt(sc.nextLine());
+			if(opc==1) {
+				System.out.println("¿De donde quieres recibir los datos?");
+				System.out.println("1. JDBC");
+				System.out.println("2. Fichero");
+				int opc2 = Integer.parseInt(sc.nextLine());
+				if(opc2==1) {
+					jc.escribir(bd1.leerEnBase());
+				}
+				if(opc2==2) {
+					jc.escribir(f1.leerFichero());
+				}
+			}
+			if(opc==2) {
+				System.out.println("¿De donde quieres pasar los datos?");
+				System.out.println("1. JDBC");
+				System.out.println("2. Fichero");
+				int opc2 = Integer.parseInt(sc.nextLine());
+				if(opc2==1) {
+					bd1.escribir(jc.leer());
+				}
+				if(opc2==2) {
+					f1.escrbirEnFichero(jc.leer());
+				}
+			}
 			break;
 		default:
 			throw new IllegalArgumentException("Unexpected value: " + option);
